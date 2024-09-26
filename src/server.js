@@ -1,30 +1,26 @@
 import React from 'react';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
+import fs from 'fs';
 
 import App from './client/app.jsx';
+import path from 'path';
 
 const app = express();
 
-app.use(express.static('dist/public'));
+app.use('/static/index.html', (_, res) => {
+  return res.status(404).end();
+});
 
-app.get('/', (_, res) => {
-  const html = renderToString(<App />);
+app.use('/static', express.static('dist/public'));
 
-  return res.send(`
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  <div id="root">${ html }</div>
-</body>
-<script defer src="/bundle.js"></script>
-</html>
-  `).end();
+app.get('*', (_, res) => {
+  const appString = renderToString(<App />);
+  const file = fs.readFileSync(path.resolve(__dirname, './public/index.html'), 'utf-8');
+  const newHtmlString = file.replace(
+    '<div id="root">123</div>', `<div id="root">${ appString }</div>`
+  );
+  return res.send(newHtmlString).status(200).end();
 });
 
 app.listen(3003, () => {
