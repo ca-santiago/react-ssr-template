@@ -18,7 +18,7 @@ app.get('*', (_, res) => {
   const appString = renderToString(<App />);
   const file = fs.readFileSync(path.resolve(__dirname, './public/index.html'), 'utf-8');
   const newHtmlString = file.replace(
-    '<div id="root">123</div>', `<div id="root">${ appString }</div>`
+    '<div id="root"></div>', `<div id="root">${ appString }</div>`
   );
   return res.send(newHtmlString).status(200).end();
 });
