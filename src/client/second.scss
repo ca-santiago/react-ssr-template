@@ -1,0 +1,12 @@
+
+body {
+  background-color: rgb(150, 201, 235); 
+}
+
+.ContentWrapper {
+  font-size: 14px;
+
+  &--active {
+    background: red;
+  }
+}

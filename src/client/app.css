@@ -1,0 +1,14 @@
+
+button {
+  background-color: #be3636;
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  padding: 8px 4px;
+  font-size: 12px;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #632020;
+  }
+}
