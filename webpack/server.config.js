@@ -1,14 +1,9 @@
 const path = require('path');
 const webpackNodeExternals = require('webpack-node-externals');
-const AfterBuildPlugin = require('@fiverr/afterbuild-webpack-plugin');
-const { enable, yellow, disable } = require('colors');
 const { default: merge } = require('webpack-merge');
-const { startDevServerWatchMode } = require('../scripts/dev-server-process');
+const { yellow } = require('colors');
 
-enable();
-
-// process.on('exit', () => disable());
-// process.on('SIGINT', () => disable());
+const isDevMode = process.env.NODE_ENV === 'development';
 
 const sharedConfig = {
   target: 'node',
@@ -26,13 +21,7 @@ const sharedConfig = {
       {
         test: /\.jsx?$/,
         exclude: '/node_modules',
-        use: {
-          loader: 'babel-loader',
-          options: {
-            targets: 'defaults',
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-          }
-        }
+        use: ['babel-loader'],
       }
     ]
   },
@@ -40,15 +29,7 @@ const sharedConfig = {
 
 const devConfig = {
   mode: 'development',
-
   devtool: 'inline-source-map',
-  watch: true,
-
-  plugins: [
-    new AfterBuildPlugin(() => {
-      startDevServerWatchMode();
-    }),
-  ]
 }
 
 const prodConfig = {
@@ -58,9 +39,7 @@ const prodConfig = {
   watch: false,
 }
 
-const isDevMode = process.env.NODE_ENV === 'development';
-
-console.log(yellow(`[BUILDER]: Running server build on ${ isDevMode ? 'DEV' : 'PROD' } mode`));
+console.log(yellow(`Running server build on ${ isDevMode ? 'DEV' : 'PROD' } mode`));
 
 const config = isDevMode ?  devConfig : prodConfig;
 

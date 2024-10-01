@@ -2,8 +2,11 @@ const { yellow } = require('colors');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { HotModuleReplacementPlugin } = require('webpack');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { default: merge } = require('webpack-merge');
+
+const isDevMode = process.env.NODE_ENV === 'development';
 
 const sharedConfig = {
   entry: [
@@ -14,6 +17,7 @@ const sharedConfig = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, '../dist/public'),
+    publicPath: '/static',
   },
   
   plugins: [
@@ -33,6 +37,11 @@ const sharedConfig = {
         exclude: '/node_modules',
         use: {
           loader: 'babel-loader',
+          options: {
+            plugins: [
+              isDevMode && 'react-hot-loader/babel'
+            ].filter(Boolean),
+          }
         },
       },
       {
@@ -43,7 +52,7 @@ const sharedConfig = {
           'css-loader',
           'sass-loader',
         ]
-      }
+      },
     ]
   },
 };
@@ -52,24 +61,29 @@ const prodConfig = {
   mode: 'production',
   devtool: 'source-map',
   watch: false,
-
 }
 
 const devConfig = {
+  mode: 'development',
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client?reload=true',
+  ],
+
   devtool: 'eval-source-map',
-  watch: true,
 
   plugins: [
-    new BundleAnalyzerPlugin({
-      openAnalyzer: true,
-    }),
-  ]
+    // new BundleAnalyzerPlugin({
+    //   openAnalyzer: true,
+    // }),
+    new HotModuleReplacementPlugin(),
+  ],
 }
 
-const isDevMode = process.env.NODE_ENV === 'development';
-
-console.log(yellow(`[BUILDER]: Running client build on ${ isDevMode ? 'DEV' : 'PROD' } mode`));
+console.log(yellow(`Running client build on ${ isDevMode ? 'DEV' : 'PROD' } mode`));
 
 const config = isDevMode ? devConfig : prodConfig;
+
+// console.log({ config: merge(config, sharedConfig) });
 
 module.exports = merge(config, sharedConfig);
