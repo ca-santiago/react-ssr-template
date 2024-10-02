@@ -1,6 +1,6 @@
 {
   "name": "webpack",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "main": "index.js",
   "scripts": {
     "build:all": "concurrently 'npm run build:server' 'npm run build:client'",

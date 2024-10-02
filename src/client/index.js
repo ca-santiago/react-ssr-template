@@ -2,7 +2,7 @@ import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { AppContainer } from 'react-hot-loader';
 
-import App from './client/app.jsx';
+import App from './app.jsx';
 
 const domNode = document.getElementById('root');
 
@@ -14,8 +14,8 @@ const root = hydrateRoot(
 );
 
 if (module.hot) {
-  module.hot.accept('./client/app.jsx', () => {
-    const NewApp = require('./client/app.jsx').default;
+  module.hot.accept('./app.jsx', () => {
+    const NewApp = require('./app.jsx').default;
     root.render(
       <AppContainer>
         <NewApp />

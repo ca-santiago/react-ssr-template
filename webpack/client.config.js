@@ -10,7 +10,7 @@ const isDevMode = process.env.NODE_ENV === 'development';
 
 const sharedConfig = {
   entry: [
-    './src/index.js',
+    './src/client/index.js',
     './src/main.scss',
   ],
 
