@@ -10,10 +10,16 @@ const sharedConfig = {
 
   externals: [webpackNodeExternals()],
 
-  entry: './src/server/index.js',
   output: {
     filename: 'server.js',
     path: path.resolve(__dirname, '../dist'),
+    library: {
+      type: 'commonjs2'
+    },
+  },
+
+  resolve: {
+    extensions: ['...', '.js', '.jsx']
   },
 
   module: {
@@ -29,11 +35,17 @@ const sharedConfig = {
 
 const devConfig = {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
+
+  entry: path.resolve(__dirname, '../src/server/ssr-handler.js'),
+  
+  watch: true,
 }
 
 const prodConfig = {
   mode: 'production',
+  
+  entry: path.resolve(__dirname, '../src/server/index.js'),
 
   devtool: 'source-map',
   watch: false,

@@ -19,7 +19,7 @@ const sharedConfig = {
     path: path.resolve(__dirname, '../dist/public'),
     publicPath: '/static',
   },
-  
+
   plugins: [
     new MiniCssExtractPlugin({
       filename: "styles.css",
@@ -50,7 +50,12 @@ const sharedConfig = {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          'sass-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            }
+          }
         ]
       },
     ]

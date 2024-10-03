@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function App() {
+function App() {
   const [count, setCount] = React.useState(99);
 
   const a = 'Some values from vars, adding some more information 22';
@@ -8,7 +8,7 @@ export default function App() {
   return (
     <div>
       <p className='ContentWrapper--active'>{ a }</p>
-      <button onClick={ () => setCount(count + 1) }>Increment testing</button>
+      <button onClick={ () => setCount(count + 1) }>Increment testing 74747</button>
       <p>{ count }</p>
       <div>
         <h2> title updated</h2>
@@ -22,3 +22,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
