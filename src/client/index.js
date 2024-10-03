@@ -3,13 +3,16 @@ import { hydrateRoot } from 'react-dom/client';
 import { AppContainer } from 'react-hot-loader';
 
 import App from './app.jsx';
+import { BrowserRouter } from 'react-router-dom';
 
 const domNode = document.getElementById('root');
 
 const root = hydrateRoot(
   domNode, 
   <AppContainer>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </AppContainer>
 );
 
@@ -18,7 +21,9 @@ if (module.hot) {
     const NewApp = require('./app.jsx').default;
     root.render(
       <AppContainer>
-        <NewApp />
+        <BrowserRouter>
+          <NewApp />
+        </BrowserRouter>
       </AppContainer>
     );
   });

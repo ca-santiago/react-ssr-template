@@ -20,6 +20,10 @@ const sharedConfig = {
     publicPath: '/static',
   },
 
+  resolve: {
+    extensions: ['...', '.js', '.jsx'],
+  },
+
   plugins: [
     new MiniCssExtractPlugin({
       filename: "styles.css",
@@ -43,6 +47,11 @@ const sharedConfig = {
             ].filter(Boolean),
           }
         },
+      },
+      {
+        test: /\.js?$/,
+        include: /node_modules\/react-dom/,
+        use: ['react-hot-loader/webpack']
       },
       {
         test: /\.(sass|s?css)/,

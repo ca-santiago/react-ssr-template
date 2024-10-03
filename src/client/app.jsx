@@ -1,24 +1,19 @@
 import React from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
+import HomeView from './views/home';
+import ManagerView from './views/manager';
 
 function App() {
-  const [count, setCount] = React.useState(99);
-
-  const a = 'Some values from vars, adding some more information 22';
-
   return (
     <div>
-      <p className='ContentWrapper--active'>{ a }</p>
-      <button onClick={ () => setCount(count + 1) }>Increment testing 74747</button>
-      <p>{ count }</p>
       <div>
-        <h2> title updated</h2>
-        <div className='mt-10'>
-          <p>Updating</p>
-        </div>
-        <div className='ContentWrapper--active'>
-          <p>Updating this content, hell yeah!</p>
-        </div>
+        <Link to={'/'} childred="Home" />
+        <Link to={'/manager'} childred="Manager" />
       </div>
+      <Routes>
+        <Route path='/' Component={ HomeView } />
+        <Route path='/manager' Component={ ManagerView } />
+      </Routes>
     </div>
   );
 }
