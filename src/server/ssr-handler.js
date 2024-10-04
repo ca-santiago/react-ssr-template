@@ -18,7 +18,7 @@ function getSSRAppString (req) {
   );
   const file = fs.readFileSync(path.resolve(__dirname, './public/index.html'), 'utf-8');
 
- return  file.replace(
+ return file.replace(
    '<div id="root"></div>',
    `<div id="root">${ appString }</div>`
  );
